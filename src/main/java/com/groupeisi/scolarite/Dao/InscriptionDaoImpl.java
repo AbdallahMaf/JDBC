@@ -2,10 +2,12 @@ package com.groupeisi.scolarite.Dao;
 
 import com.groupeisi.scolarite.entities.Inscription;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.ResultSet;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Scanner;
 
 public class InscriptionDaoImpl implements IInscriptionDao {
 
@@ -27,7 +29,18 @@ public class InscriptionDaoImpl implements IInscriptionDao {
             String sql = "INSERT INTO inscription VALUES(null,?,?)";
             db.init(sql);
 
-            db.getPstm().setString(1, inscription.getDate());
+            System.out.println("Date");
+            Date date = null;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Scanner scan = null;
+                date = (Date) sdf.parse(scan.nextLine());
+                db.getPstm().setDate(1, (java.sql.Date) inscription.getDate());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            inscription.setDate(date);
+
             db.getPstm().setString(2, inscription.getClasse());
 
             result = db.executeUpdate();
@@ -51,6 +64,10 @@ public class InscriptionDaoImpl implements IInscriptionDao {
     }
 
     public List<Inscription> getAll() {
+        return null;
+    }
+
+    public Inscription login(java.sql.Date date, String classe) {
         return null;
     }
 
