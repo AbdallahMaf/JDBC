@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Scanner;
 
 public class InscriptionDaoImpl implements IInscriptionDao {
 
@@ -29,18 +28,13 @@ public class InscriptionDaoImpl implements IInscriptionDao {
             String sql = "INSERT INTO inscription VALUES(null,?,?)";
             db.init(sql);
 
-            System.out.println("Date");
-            Date date = null;
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            try {
-                Scanner scan = null;
-                date = (Date) sdf.parse(scan.nextLine());
-                db.getPstm().setDate(1, (java.sql.Date) inscription.getDate());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            inscription.setDate(date);
 
+            String s = inscription.getDate();
+            SimpleDateFormat sdf;
+            sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+
+            db.getPstm().setDate(1, java.sql.Date.valueOf(inscription.getDate()));
             db.getPstm().setString(2, inscription.getClasse());
 
             result = db.executeUpdate();
